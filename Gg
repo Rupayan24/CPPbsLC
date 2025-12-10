@@ -1,1 +1,291 @@
-Readme
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Learning Portal</title>
+
+    <style>
+        :root {
+            --bg: #f5f5f5;
+            --text: #000;
+            --card-bg: #fff;
+            --shadow: rgba(0,0,0,0.1);
+            --btn-bg: #111;
+            --btn-text: #fff;
+        }
+
+        /* DARK MODE VARIABLES */
+        .dark {
+            --bg: #121212;
+            --text: #e5e5e5;
+            --card-bg: #1f1f1f;
+            --shadow: rgba(0,0,0,0.6);
+            --btn-bg: #333;
+            --btn-text: #fff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        header {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        /* Dark Mode Toggle Button */
+        .toggle-btn {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            padding: 8px 15px;
+            background: #fff;
+            color: #000;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .dark .toggle-btn {
+            background: #444;
+            color: #fff;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: #ddd;
+            height: 15px;
+        }
+        .progress-bar {
+            height: 15px;
+            width: 0%;
+            background: #4caf50;
+        }
+
+        .search-box {
+            padding: 15px;
+            width: 90%;
+            margin: 20px auto;
+            display: block;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 2px solid #444;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .section-title {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .category-progress {
+            width: 90%;
+            margin: 10px auto;
+        }
+
+        .category-progress-bar {
+            height: 10px;
+            background: #2196f3;
+            width: 0%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px var(--shadow);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .btn {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .completed {
+            border: 3px solid #4caf50;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    Sign Language Learning Portal
+    <div class="toggle-btn" onclick="toggleDarkMode()">🌙 Dark Mode</div>
+</header>
+
+<!-- OVERALL PROGRESS -->
+<div class="progress-container">
+    <div id="overallProgress" class="progress-bar"></div>
+</div>
+
+<!-- Search Bar -->
+<input type="text" id="search" class="search-box" placeholder="Search words, alphabets, numbers...">
+
+
+<!-- WORDS SECTION -->
+<div class="section-title">Words (6)</div>
+<div class="category-progress">
+    <div id="wordsProgress" class="category-progress-bar"></div>
+</div>
+<div class="grid" id="wordsGrid"></div>
+
+
+<!-- ALPHABETS SECTION -->
+<div class="section-title">Alphabets (A - Z)</div>
+<div class="category-progress">
+    <div id="alphabetsProgress" class="category-progress-bar"></div>
+</div>
+<div class="grid" id="alphabetsGrid"></div>
+
+
+<!-- NUMBERS SECTION -->
+<div class="section-title">Numbers (0 - 9)</div>
+<div class="category-progress">
+    <div id="numbersProgress" class="category-progress-bar"></div>
+</div>
+<div class="grid" id="numbersGrid"></div>
+
+
+<script>
+// Data
+const words = ["Hello", "Thank You", "Sorry", "Please", "Goodbye", "Yes"];
+const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const numbers = ["0","1","2","3","4","5","6","7","8","9"];
+
+let completed = JSON.parse(localStorage.getItem("completed")) || {};
+
+// Generate Cards
+function createCard(name, folder, gridId) {
+    const grid = document.getElementById(gridId);
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.id = name;
+
+    if (completed[name]) card.classList.add("completed");
+
+    card.innerHTML = `
+        <h3>${name}</h3>
+        <img src="${folder}/${name}.jpg">
+        <button class="btn" onclick="watch('${name}')">Watch Video</button>
+        <video id="video_${name}" controls src="${folder}/${name}.mp4"></video>
+    `;
+
+    grid.appendChild(card);
+}
+
+words.forEach(w => createCard(w, "images", "wordsGrid"));
+alphabets.forEach(a => createCard(a, "alphabets", "alphabetsGrid"));
+numbers.forEach(n => createCard(n, "numbers", "numbersGrid"));
+
+
+// Video Watch Logic
+function watch(name) {
+    const video = document.getElementById("video_" + name);
+    video.style.display = "block";
+    video.play();
+
+    completed[name] = true;
+    localStorage.setItem("completed", JSON.stringify(completed));
+
+    document.getElementById(name).classList.add("completed");
+    updateProgress();
+}
+
+
+// Search Filter
+document.getElementById("search").addEventListener("keyup", function () {
+    let value = this.value.toLowerCase();
+    document.querySelectorAll(".card").forEach(card => {
+        let title = card.querySelector("h3").innerText.toLowerCase();
+        card.style.display = title.includes(value) ? "block" : "none";
+    });
+});
+
+
+// Progress Update
+function updateProgress() {
+    const total = words.length + alphabets.length + numbers.length;
+    const done = Object.keys(completed).length;
+
+    document.getElementById("overallProgress").style.width = (done / total * 100) + "%";
+
+    document.getElementById("wordsProgress").style.width =
+        (words.filter(w => completed[w]).length / words.length * 100) + "%";
+
+    document.getElementById("alphabetsProgress").style.width =
+        (alphabets.filter(a => completed[a]).length / alphabets.length * 100) + "%";
+
+    document.getElementById("numbersProgress").style.width =
+        (numbers.filter(n => completed[n]).length / numbers.length * 100) + "%";
+}
+
+updateProgress();
+
+
+// Dark Mode Toggle
+function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+
+    let mode = document.body.classList.contains("dark") ? "dark" : "light";
+    localStorage.setItem("theme", mode);
+
+    document.querySelector(".toggle-btn").innerText = 
+        mode === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+}
+
+// Load saved theme
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    document.querySelector(".toggle-btn").innerText = "☀️ Light Mode";
+}
+</script>
+
+</body>
+</html>

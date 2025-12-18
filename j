@@ -29,12 +29,25 @@ function generateBotReply(input) {
     if (low.includes("thank")) {
         return "You're very welcome! I'm happy to help you bridge the communication gap.";
     }
+    if (low.includes("how are you")) {
+        return "I'm functioning perfectly and ready to translate! How about you?";
+    }
 
-    // 5. Navigation & Exit
+    // 5. Educational/Learning
+    if (low.includes("learn") || low.includes("study") || low.includes("lesson")) {
+        return "Want to learn sign language? Head over to our 'Learning' tab to find interactive tutorials and practice sessions!";
+    }
+
+    // 6. Navigation & Exit
     if (low.includes("home") || low.includes("exit") || low.includes("back")) {
         return "You can return to the main page by clicking the 'Home' button in the top-left corner.";
     }
 
-    // Default Fallback (The "I don't know" response)
-    return "I'm still learning! You can ask me about 'camera setup', 'how it works', or 'ASL support'.";
+    // 7. Mission/About
+    if (low.includes("who made this") || low.includes("creator") || low.includes("purpose")) {
+        return "GestureTalk AI was developed to bridge the communication gap between the deaf community and the hearing world.";
+    }
+
+    // Default Fallback
+    return "I'm still learning! Try asking about 'camera help', 'pricing', 'ASL support', or 'how it works'.";
 }

@@ -51,3 +51,31 @@ function generateBotReply(input) {
     // Default Fallback
     return "I'm still learning! Try asking about 'camera help', 'pricing', 'ASL support', or 'how it works'.";
 }
+
+
+
+
+
+
+
+<nav class="navbar bg-body-tertiary border-bottom sticky-top">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    
+    <!-- 1. Brand Logo -->
+    <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
+
+    <!-- 2. Links inline in the middle -->
+    <div class="navbar-nav flex-row gap-3">
+      <a class="nav-link" href="/">Home</a>
+      <a class="nav-link" href="/listings">All Listings</a>
+      <a class="nav-link" href="/listings/new">Add New Listing</a>
+    </div>
+
+    <!-- 3. Menu Toggler Button on the far right -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+  </div>
+</nav>
+

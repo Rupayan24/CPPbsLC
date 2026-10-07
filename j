@@ -56,26 +56,27 @@ function generateBotReply(input) {
 
 
 
-
-
-<nav class="navbar bg-body-tertiary border-bottom sticky-top">
+<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
   <div class="container-fluid d-flex align-items-center justify-content-between">
     
     <!-- 1. Brand Logo -->
     <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
 
-    <!-- 2. Links inline in the middle -->
-    <div class="navbar-nav flex-row gap-3">
-      <a class="nav-link" href="/">Home</a>
-      <a class="nav-link" href="/listings">All Listings</a>
-      <a class="nav-link" href="/listings/new">Add New Listing</a>
-    </div>
-
-    <!-- 3. Menu Toggler Button on the far right -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+    <!-- 2. Menu Toggler Button (Only shows when screen space is small) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- 3. Collapsible Container -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav flex-row gap-3 ms-auto mt-2 mt-md-0">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/listings">All Listings</a>
+        <a class="nav-link" href="/listings/new">Add New Listing</a>
+      </div>
+    </div>
+
   </div>
 </nav>
+
 

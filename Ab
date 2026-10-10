@@ -300,3 +300,16 @@ footer{margin:48px 0 20px;color:var(--muted);text-align:center}
     // If you want multiple image/video slots, use an array in JS and swap src values on demand.
   </script></body>
 </html>
+
+
+
+
+
+
+<div id="map-data" data-coordinates="<%- JSON.stringify((listing.geometry && listing.geometry.coordinates) || [0, 0]) %>"></div>
+
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const mapData = document.getElementById("map-data").dataset.coordinates;
+    const coordinates = JSON.parse(mapData);
+</script>
